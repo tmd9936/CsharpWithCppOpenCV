@@ -31,6 +31,35 @@ namespace OpencvUI
         public MainWindow()
         {
             InitializeComponent();
+
+            Unloaded += MainWindow_Unloaded;
+        }
+
+        private void MainWindow_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (originMs != null)
+            {
+                originMs.Dispose();
+                originMs = null;
+            }
+
+            if (resultMs != null)
+            {
+                resultMs.Dispose();
+                resultMs = null;
+            }
+
+            if (originImg != null)
+            {
+                originImg.Dispose();
+                originImg = null;
+            }
+
+            if (resultImg != null)
+            {
+                resultImg.Dispose();
+                resultImg = null;
+            }
         }
 
         [DllImport("CppOpenCV.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -89,26 +118,10 @@ namespace OpencvUI
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Image Processing Error: " + ex.ToString());
             }
             finally
             {
-                //if (ms != null)
-                //{
-                //    ms.Dispose();
-                //    ms = null;
-                //}
-
-                //if (originImg != null)
-                //{
-                //    originImg.Dispose();
-                //    originImg = null;
-                //}
-
-                //if (resultImg != null)
-                //{
-                //    resultImg.Dispose();
-                //    resultImg = null;
-                //}
             }
         }
 
