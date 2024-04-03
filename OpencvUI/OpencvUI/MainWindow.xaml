@@ -43,7 +43,7 @@
                 </Grid.RowDefinitions>
 
                 <CheckBox Content="IsGaussian" Grid.Row="0" x:Name="IsGaussianCheckBox" IsChecked="True" />
-                <CheckBox Content="IsBinary" Grid.Row="1" x:Name="IsBinaryCheckBox" IsChecked="True" />
+                <CheckBox Content="IsInvBinary" Grid.Row="1" x:Name="IsInvBinaryCheckBox" IsChecked="False" />
 
             </Grid>
 

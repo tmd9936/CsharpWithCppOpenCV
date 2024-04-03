@@ -63,7 +63,7 @@ namespace OpencvUI
 
                 int MaxValue = (int)(MaxValueSlider.Value);
                 bool isGaussian = IsGaussianCheckBox.IsChecked.Value;
-                bool isBinary = IsBinaryCheckBox.IsChecked.Value;
+                bool isBinary = !IsInvBinaryCheckBox.IsChecked.Value;
                 int blockSize = (int)(BlockSizeSlider.Value);
                 int cValue = (int)(CSlider.Value);
 
