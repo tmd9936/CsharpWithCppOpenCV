@@ -78,6 +78,87 @@ extern "C" __declspec(dllexport) unsigned char* CvAdaptiveThreshold(BYTE* byteAr
 	return returnArray;
 }
 
+extern "C" __declspec(dllexport) unsigned char* SearchBlob(BYTE * byteArray, int width, int height, int& outSize)
+{
+	if (byteArray == nullptr)
+		return 0;
+
+	Mat image = Mat(1, width * height, CV_8U, byteArray); // make a copy
+	cv::Mat decodedImage = cv::imdecode(image, cv::IMREAD_GRAYSCALE);
+
+	vector<KeyPoint> keypoints;
+
+	SimpleBlobDetector::Params params;
+	Ptr<SimpleBlobDetector> detector = SimpleBlobDetector::create(params);
+
+	detector->detect(decodedImage, keypoints);
+
+	Mat dst;
+
+	drawKeypoints(decodedImage, keypoints, dst, Scalar(0, 0, 255), DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+
+	std::vector<uchar> encoded;
+	cv::imencode(".png", dst, encoded);
+
+	// 바이트 배열을 C#으로 반환
+	outSize = encoded.size();
+	unsigned char* returnArray = new unsigned char[outSize];
+	std::copy(encoded.begin(), encoded.end(), returnArray);
+
+	return returnArray;
+}
+
+extern "C" __declspec(dllexport) unsigned char* SearchBlob(BYTE * byteArray, int width, int height, bool collectContours, bool filterByArea, bool filterByCircularity, bool filterByColor, bool filterByConvexity, bool filterByInertia,  
+	float minArea, float maxArea, float minCircularity, float maxCircularity, float minConvexity, float maxConvexity,  float minInertiaRatio, float maxInertiaRatio, 
+	float minThreshold, float maxThreshold, float minRepeatability,float minDistBetweenBlobs, float thresholdStep, int& outSize)
+{
+	if (byteArray == nullptr)
+		return 0;
+
+	Mat image = Mat(1, width * height, CV_8U, byteArray); // make a copy
+	cv::Mat decodedImage = cv::imdecode(image, cv::IMREAD_GRAYSCALE);
+
+	vector<KeyPoint> keypoints;
+
+	SimpleBlobDetector::Params params;
+	params.collectContours = collectContours;
+	params.filterByArea = filterByArea;
+	params.filterByCircularity = filterByCircularity;
+	params.filterByColor = filterByColor;
+	params.filterByConvexity = filterByConvexity;
+	params.filterByInertia = filterByInertia;
+	params.minArea = minArea;
+	params.maxArea = maxArea;
+	params.minCircularity = minCircularity;
+	params.maxCircularity = maxCircularity;
+	params.minConvexity = minConvexity;
+	params.maxConvexity= maxConvexity;
+	params.minInertiaRatio = minInertiaRatio;
+	params.maxInertiaRatio = maxInertiaRatio;
+	params.minThreshold = minThreshold;
+	params.maxThreshold = maxThreshold;
+	params.minRepeatability = minRepeatability;
+	params.minDistBetweenBlobs = minDistBetweenBlobs;
+	params.thresholdStep = thresholdStep;
+
+	Ptr<SimpleBlobDetector> detector = SimpleBlobDetector::create(params);
+
+	detector->detect(decodedImage, keypoints);
+
+	Mat dst;
+	drawKeypoints(decodedImage, keypoints, dst, Scalar(0, 0, 255), DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+
+	std::vector<uchar> encoded;
+	cv::imencode(".png", dst, encoded);
+
+	// 바이트 배열을 C#으로 반환
+	outSize = encoded.size();
+	unsigned char* returnArray = new unsigned char[outSize];
+	std::copy(encoded.begin(), encoded.end(), returnArray);
+
+	return returnArray;
+}
+
 extern "C" __declspec(dllexport) void FreeMemory(unsigned char* array) {
 	delete[] array;
 }

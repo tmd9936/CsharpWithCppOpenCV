@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="OpencvUI.Views.AdaptiveThresholdView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:OpencvUI.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition/>
+            <RowDefinition Height="0.05"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" x:Name="ExcuteButton" Content="실행" Click="ChangeImage" />
+            <Grid Grid.Column="1" Margin="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="MaxValue"/>
+                <Slider Grid.Row="1" Value="255" x:Name="MaxValueSlider" Minimum="0" Maximum="255" SmallChange="1" ValueChanged="MaxValueChanged" />
+                <TextBlock Grid.Row="2" x:Name="MaxValueTextBlock" Text="255"/>
+            </Grid>
+
+            <Grid Grid.Column="2" Margin="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <CheckBox Content="IsGaussian" Grid.Row="0" x:Name="IsGaussianCheckBox" IsChecked="True" />
+                <CheckBox Content="IsInvBinary" Grid.Row="1" x:Name="IsInvBinaryCheckBox" IsChecked="False" />
+
+            </Grid>
+
+            <Grid Grid.Column="3" Margin="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="블록 사이즈"/>
+                <Slider Grid.Row="1" Value="7" x:Name="BlockSizeSlider" Minimum="3" Maximum="7"  ValueChanged="BlockSizeChanged" TickFrequency="2" SmallChange="2" LargeChange="2"  />
+                <TextBlock Grid.Row="2" x:Name="BlockSizeTextBlock" Text="7"/>
+            </Grid>
+
+            <Grid Grid.Column="4" Margin="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="상수"/>
+                <Slider Grid.Row="1" Value="5" x:Name="CSlider" Minimum="1" Maximum="20" SmallChange="1" ValueChanged="CChanged"  />
+                <TextBlock Grid.Row="2" x:Name="CTextBlock" Text="5"/>
+            </Grid>
+        </Grid>
+
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="원본" />
+            <TextBlock Grid.Column="1" Text="결과" />
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" x:Name="uiPicOrigin" />
+            <Image Grid.Column="1" x:Name="uiPicResult" />
+        </Grid>
+    </Grid>
+</UserControl>
